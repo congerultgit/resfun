@@ -1,4 +1,5 @@
 <?php
+set_time_limit(0); 
 /*
  * @双色球练习篇
  * 此项目主要为了练习
@@ -34,7 +35,7 @@ $limit = 1;
 while(1==1){
 //$limit++;
 //if($limit == 10)break;
-sleep(1);
+usleep(1000);
 $url = 'http://datachart.500.com/ssq/history/newinc/history.php?start='.$start.'&end='.$end.'';
 $res = xlu::object('xlu\lib\resource',array(array('res_name'=>$url,'res_type'=>'url')));
 echo $url.'</br>';
