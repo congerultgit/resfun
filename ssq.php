@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 set_time_limit(0); 
 /*
@@ -115,4 +116,123 @@ $start++;
 $end++;
 
 }
+=======
+<?php
+set_time_limit(0); 
+/*
+ * @双色球练习篇
+ * 此项目主要为了练习
+ * 期数
+ * 红球1-33 选6
+ * 篮球1-16 选1
+ * */
+define('RF_OFFDIR',DIRECTORY_SEPARATOR);
+define('RF_ROOT',dirname(__FILE__));
+define('XLU_ROOT',dirname(dirname(__FILE__)).RF_OFFDIR.'xlu');
+//载入xlu框架
+include_once(XLU_ROOT.RF_OFFDIR.'xlu.php');
+
+
+$db = xlu::object(array(
+		'class'=>'xlu\lib\db\DbConnection',
+		'username' =>'root',
+		'password'  => '',
+		'dsn'=>'mysql:host=127.0.0.1;dbname=test',
+		'charset' =>'utf8'
+));
+
+
+//test 初步测试框架
+//彩票500采集
+//$res = xlu::object('xlu\lib\resource',array(array('res_name'=>'http://datachart.500.com/ssq/?expect=100','res_type'=>'url')));
+//历史url
+//url http://datachart.500.com/ssq/history/newinc/history.php?start=1&end=2
+$start = 10000;
+$end = 10001;
+
+$limit = 1;
+while(1==1){
+//$limit++;
+//if($limit == 10)break;
+usleep(1000);
+$url = 'http://datachart.500.com/ssq/history/newinc/history.php?start='.$start.'&end='.$end.'';
+$res = xlu::object('xlu\lib\resource',array(array('res_name'=>$url,'res_type'=>'url')));
+echo $url.'</br>';
+$obj_res = $res->getObject();
+
+//获得双色球的原始数据
+$orig_html = $obj_res->read();
+
+//echo $orig_html;
+
+//var_export($orig_html);
+
+//获得需要的html
+/*
+ * 
+ *没有/s修饰符 .不会匹配换行符
+ *
+ */
+//获得全部格式
+preg_match_all ('/<tbody id="tdata">([\s\S]*)<\/tbody>/ims',$orig_html,$need_html ,  PREG_PATTERN_ORDER );
+
+
+
+//格式拆分
+$need_html = trim($need_html[1][0]);
+
+//期数
+preg_match_all ('/<td>([\s\S]*?)<\/td>/ims',$need_html,$sq_html ,  PREG_PATTERN_ORDER );
+$sq = $sq_html[1][1];
+echo 'id:'.$sq.'<br>';
+if(empty($sq)){
+	echo ($sq-1);
+	echo 'down';
+	exit;
+}
+//红球
+preg_match_all ('/<td class="t_cfont2">([\s\S]*?)<\/td>/ims',$need_html,$red_html ,  PREG_PATTERN_ORDER );
+$red_data = $red_html[1];
+echo '<pre>';
+var_dump($red_data);
+echo '</pre>';
+//蓝球
+preg_match_all ('/<td class="t_cfont4">([\s\S]*?)<\/td>/ims',$need_html,$blue_html ,  PREG_PATTERN_ORDER );
+$blue_data = $blue_html[1][0];
+echo '<pre>';
+var_dump($blue_data);
+echo '</pre>';
+
+//生成SQL 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values("1",1,1,1,1,1,1,1,'.time().')';
+$sub_sql = '';
+$sub_sql .= $sq;
+$count = 1;
+foreach($red_data as $key=>$val){
+	
+	$val = trim($val);
+	if(substr($val,0,1) == 0){
+		$val = substr($val,1);
+	}
+	$sub_sql .=','.$val;
+	$count++;
+	if($count ==7){
+		break;
+	}
+}
+$sub_sql .= ','.$blue_data.','.time();
+
+$insert = 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values('.$sub_sql.')';
+	
+echo $insert.'<br>';	
+
+$tmp = $db->createCommand($insert);
+$num = $tmp->execute();
+echo '<pre>';
+var_dump($num);
+echo '</pre>';
+$start++;
+$end++;
+
+}
+>>>>>>> da7bd17d5ac508c30edd2b2830af9dc5c647a793
 ?>
