@@ -4,7 +4,7 @@ define('RF_OFFDIR',DIRECTORY_SEPARATOR);
 define('RF_ROOT',dirname(__FILE__));
 define('XLU_ROOT',dirname(dirname(__FILE__)).RF_OFFDIR.'xlu');
 define('RESFUN_ROOT',dirname(__FILE__).RF_OFFDIR);
-
+//ssq 33 16
 
 
 
@@ -21,7 +21,7 @@ $db = xlu::object(array(
 ));
 
 
-$sql = 'select * from fun_ssq order by ssqid desc';
+$sql = 'select * from fun_ssq order by ssqid desc limit 30';
 
 $tmp = $db->createCommand($sql);
 $data = $tmp->queryAll();
@@ -57,27 +57,69 @@ $data = $tmp->queryAll();
 }		
 
 .line{
-	width:960px;
+	/*width:px;*/
 	height:auto;
 	text-align:center;
-	background-color:#333333;
-	//margin-top: 20px;
-	//margin-bottom: 20px;
+	background-color:whitesmoke;
+	/*margin-top: 20px;*/
+	/*margin-bottom: 20px;*/
     height:35px;
-    //line-height: 28px;
+    padding-top;2px;
+    /*line-height: 28px;*/
+}
+
+.line span {
+	float: left;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+.number{
+	width:60px;
+	height:auto;
+	text-align:center;
+	background-color:cyan;
+	margin-left: 10px;
+}
+.blue{
+	width:25px;
+	height:auto;
+	text-align:center;
+	//background-color:blueviolet;
+	margin-left: 5px;
+	border:1px solid blue;
+}
+.blueclear{
+	width:25px;
+	height:auto;
+	text-align:center;
+	//background-color:blueviolet;
+	margin-left: 5px;
+	//border:1px solid blue;
 }
 
 .one{
 	width:25px;
 	height:auto;
 	text-align:center;
-	float: left;
-	background-color:cyan;
-	margin-left: 20px;
+	//background-color:#00AEAE;
+	margin-left: 5px;
+	border:1px solid red;
 }
+
+.oneclear{
+	width:25px;
+	height:auto;
+	text-align:center;
+	//background-color:#00AEAE;
+	margin-left: 5px;
+	//border:1px solid red;
+}
+
 .claer{
-	both:clear;
+	clear: both;
 }
+.claer:after {display: block;content: '';clear: both;}
 
 .blank{
 	width: 100%;
@@ -87,8 +129,14 @@ $data = $tmp->queryAll();
     margin: auto;
     //position: relative;
     z-index: 2;
-    width: 960px;
+    width:1560px;
 }	
+
+.line:hover
+{ 
+background-color:white;
+cursor:hand;
+}
 	
 </style>
 
@@ -100,36 +148,55 @@ $data = $tmp->queryAll();
 			
 			
 		</div>
-		<div class='page'>	
+		<div class='page claer'>	
 		
 		<?php foreach ($data as $key => $value) { ?>
-			<div class ="line" >		
-				<div class="one" >	
-				<?php echo $value['red_1'] ?>				
-				</div>
-				<div class="one" >	
-				<?php echo $value['red_2'] ?>				
-				</div>			
-				<div class="one" >	
-				<?php echo $value['red_3'] ?>				
-				</div>									
-				<div class="one" >	
-				<?php echo $value['red_4'] ?>				
-				</div>	
-				<div class="one" >	
-				<?php echo $value['red_5'] ?>				
-				</div>					
-				<div class="one" >	
-				<?php echo $value['red_6'] ?>				
-				</div>					
-				<div class="one" >	
-				<?php echo $value['blue_1'] ?>				
-				</div>				
-			
+			<div class ="line claer" >
+				
+							
+				<span class="number" >	
+				<?php echo $value['sys_number'] ?>				
+				</span>
+				
+				
+				<?php for($i=1;$i<=33;$i++){				
+					$for_array = $value;
+					unset($for_array['ssqid']);
+					unset($for_array['sys_number']);
+					unset($for_array['blue_1']);
+					unset($for_array['create_time']);
+				?>
+				
+				<?php  if(array_search($i,$for_array) !== false) { ?>
+				<span class="one" >	
+				<?php echo $i ?>				
+				</span>
+					
+				<?php }else{  ?> 
+				<span class="oneclear" >	
+				<?php echo $i ?>				
+				</span>				
+				<?php } ?>			
+				<?php  } ?>	
+					
+				<?php for($i=1;$i<=16;$i++){ ?>
+					
+				<?php if($i == $value['blue_1']) {?>
+									
+				<span class="blue" >	
+				<?php echo $i ?>				
+				</span>
+				
+				<?php }else{ ?>
+				
+				<span class="blueclear" >	
+				<?php echo $i ?>				
+				</span>			
+					
+				<?php } ?>				
+				<?php } ?>
 			</div>
-			<div class="claser"></div>
-			<?php }  ?>		
-		
+			<?php }  ?>
 		</div>
 		
 						

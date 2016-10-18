@@ -85,32 +85,57 @@ var_dump($blue_data);
 echo '</pre>';
 
 //生成SQL 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values("1",1,1,1,1,1,1,1,'.time().')';
-$sub_sql = '';
-$sub_sql .= $sq;
-$count = 1;
-foreach($red_data as $key=>$val){
-	
-	$val = trim($val);
-	if(substr($val,0,1) == 0){
-		$val = substr($val,1);
-	}
-	$sub_sql .=','.$val;
-	$count++;
-	if($count ==7){
-		break;
-	}
+
+
+
+
+
+
+$check = true;
+$check_number = $sq;
+
+$check_sql = 'select * from fun_ssq where sys_number ='.$check_number;
+$tmp_db = $db->createCommand($check_sql);
+$data = $tmp_db->queryAll();
+if($data){
+	$check = false;
 }
-$sub_sql .= ','.$blue_data.','.time();
+//var_dump($data);
 
-$insert = 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values('.$sub_sql.')';
+if($check == true){ 
+	$sub_sql = '';
+	$sub_sql .= $sq;
+	$count = 1;
+	foreach($red_data as $key=>$val){
+		
+		$val = trim($val);
+		if(substr($val,0,1) == 0){
+			$val = substr($val,1);
+		}
+		$sub_sql .=','.$val;
+		$count++;
+		if($count ==7){
+			break;
+		}
+	}
+	$sub_sql .= ','.$blue_data.','.time();
 	
-echo $insert.'<br>';	
-
-$tmp = $db->createCommand($insert);
-$num = $tmp->execute();
-echo '<pre>';
-var_dump($num);
-echo '</pre>';
+	$insert = 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values('.$sub_sql.')';
+		
+	echo $insert.'<br>';	
+	
+	$tmp = $db->createCommand($insert);
+	$num = $tmp->execute();
+	
+	
+	echo '<pre>';
+	var_dump($num);
+	echo '</pre>';
+}else{
+	echo '<pre>';
+	var_dump($sq.'已经存在了');
+	echo '</pre>';	
+}
 $start++;
 $end++;
 
