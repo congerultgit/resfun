@@ -94,7 +94,7 @@ echo '</pre>';
 $check = true;
 $check_number = $sq;
 
-$check_sql = 'select * from fun_ssq where sys_number ='.$check_number;
+$check_sql = 'select * from ssq_log where sys_number ='.$check_number;
 $tmp_db = $db->createCommand($check_sql);
 $data = $tmp_db->queryAll();
 if($data){
@@ -105,6 +105,8 @@ if($data){
 if($check == true){ 
 	$sub_sql = '';
 	$sub_sql .= $sq;
+	$red_format = '';
+	$blue_format = '';
 	$count = 1;
 	foreach($red_data as $key=>$val){
 		
@@ -113,14 +115,23 @@ if($check == true){
 			$val = substr($val,1);
 		}
 		$sub_sql .=','.$val;
+		$red_format .= ' red_'.$val.',';
 		$count++;
 		if($count ==7){
 			break;
 		}
 	}
+	if(substr($blue_data,0,1) == 0){
+			$blue_data = substr($blue_data,1);
+	}
+
+	
+	$red_format .= 'blue_'.$blue_data;
+	
 	$sub_sql .= ','.$blue_data.','.time();
 	
-	$insert = 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values('.$sub_sql.')';
+	//$insert = 'insert into fun_ssq(sys_number,red_1,red_2,red_3,red_4,red_5,red_6,blue_1,create_time) values('.$sub_sql.')';
+	$insert = 'insert into ssq_log(sys_number,'.$red_format.',create_time) values('.$sub_sql.')';
 		
 	echo $insert.'<br>';	
 	
