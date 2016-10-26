@@ -10,6 +10,11 @@ set_time_limit(0);
 define('RF_OFFDIR',DIRECTORY_SEPARATOR);
 define('RF_ROOT',dirname(__FILE__));
 define('XLU_ROOT',dirname(dirname(__FILE__)).RF_OFFDIR.'xlu');
+
+//confing
+header("Content-type: text/html; charset=utf-8");    
+
+
 //载入xlu框架
 include_once(XLU_ROOT.RF_OFFDIR.'xlu.php');
 
@@ -28,8 +33,8 @@ $db = xlu::object(array(
 //$res = xlu::object('xlu\lib\resource',array(array('res_name'=>'http://datachart.500.com/ssq/?expect=100','res_type'=>'url')));
 //历史url
 //url http://datachart.500.com/ssq/history/newinc/history.php?start=1&end=2
-$start = 10000;
-$end = 10001;
+$start = 16025;
+$end = 16025;
 
 $limit = 1;
 while(1==1){
