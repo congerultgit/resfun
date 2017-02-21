@@ -7,6 +7,7 @@ set_time_limit(0);
  * 红球1-33 选6
  * 篮球1-16 选1
  * */
+//lxtest
 define('RF_OFFDIR',DIRECTORY_SEPARATOR);
 define('RF_ROOT',dirname(__FILE__));
 define('XLU_ROOT',dirname(dirname(__FILE__)).RF_OFFDIR.'xlu');
