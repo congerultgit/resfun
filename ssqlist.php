@@ -5,6 +5,7 @@ define('RF_ROOT',dirname(__FILE__));
 define('XLU_ROOT',dirname(dirname(__FILE__)).RF_OFFDIR.'xlu');
 define('RESFUN_ROOT',dirname(__FILE__).RF_OFFDIR);
 //ssq 33 16
+//lxtest
 
 //set 
 header("Content-type: text/html; charset=utf-8");     
