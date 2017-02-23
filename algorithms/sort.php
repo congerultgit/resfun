@@ -35,7 +35,7 @@ function insertSort($array=array()){
 
 		//$j = $i-1;
 		//$value = $array[$i];
-		$key = $i
+		//$key = $i
 		for($j=$i-1;$j>=0;){
 			 if($array[$j]>$array[$j+1]){
 				$tmp = $array[$j];
