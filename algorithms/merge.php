@@ -52,34 +52,51 @@ function mergeSort($array=array()){
 }
 
 function mergeArray($leftArray,$rightArray){
-var_dump($leftArray);
-var_dump($rightArray);
     
  $count_l = count($leftArray);
- $connt_r = count($rightArray);
+ $count_r = count($rightArray);
  $count = $count_l+$count_r;
  $sort = array();
  $i = 0;
  $j = 0;
- while((int)count($sort)<=(int)$count){
+ while(1==1){
 	if((int)$leftArray[$i]>(int)$rightArray[$j]){
+		if(isset($rightArray[$j])==false){
+			if(isset($leftArray[$i])===false)break;
+			$sort[] = $leftArray[$i];
+			$i++;
+			//$j--;
+			continue;	
+		}
+
 		$sort[] = $rightArray[$j];
 		$j++;
-	}else{	
+	}else{
+		if(isset($leftArray[$i])===false){
+			if(isset($rightArray[$j])===false)break;
+			$sort[] = $rightArray[$j];
+			$j++;
+			//$i--;
+			continue;
+		}
 		$sort[] = $leftArray[$i];
 		$i++;
 	
-	} 
+	}
+	if(count($sort)==$count)break;
  }
+ var_dump('start');
+ var_dump($leftArray);
+ var_dump($rightArray);
  var_dump($sort);
+ var_dump('end');
  return $sort;
 
 }
 
 
 
-//func
-//插入排序 254613
+//funcva/插入排序 254613
 function insertSort($array=array()){
 
 
